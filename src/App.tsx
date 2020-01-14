@@ -1,6 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { iCalFilter } from './iCal-filter'
+
+const filter = new iCalFilter();
 
 const App: React.FC = () => {
   return (
@@ -18,9 +21,10 @@ const App: React.FC = () => {
         >
           Learn React
         </a>
+        <input type="file" name="file" onChange={(file) => filter.loadFile(file)} />
       </header>
     </div>
   );
-}
+};
 
 export default App;
