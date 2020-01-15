@@ -33,9 +33,6 @@ export default class CalFilter extends React.Component<MyProps, MyState> {
             <button onClick={() => this.showSelected()}>
                SUBMIT
             </button>
-            <button onClick={() => this.filterCal()}>
-               DOWNLOAD
-            </button>
             <input type="file" name="file" onChange={(file) => this.loadFile(file.target.files as FileList)} />
             {[...this.state.eventSet].map((event) =>
                <div key={event}>
@@ -64,10 +61,10 @@ export default class CalFilter extends React.Component<MyProps, MyState> {
       let checked: {[key: string]: boolean} = {};
 
       for (let i: number = 0; i < lines.length; i++) {
-         let summary: string = lines[i].slice(0, 7);
+         let summary: string = lines[i].trim().slice(0, 7);
          if (summary === "SUMMARY") {
             eventSet.add(lines[i].slice(8));
-            checked[lines[i].slice(8).toString()] = false;
+            checked[lines[i].slice(8)] = false;
          }
       }
 
@@ -116,7 +113,7 @@ export default class CalFilter extends React.Component<MyProps, MyState> {
                   }
                }
 
-               eventLines.push(lines[i].trim());
+               eventLines.push(lines[i]);
                end = lines[i++].trim() === "END:VEVENT";
             }
             if (keepEvent) {
